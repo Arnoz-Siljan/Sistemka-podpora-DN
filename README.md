@@ -3,7 +3,7 @@
 Projekt za predmet Sistemska podpora - primerjava performanc PostgreSQL in MySQL baz podatkov na Linux (Fedora) in FreeBSD sistemih.
 
 ## Avtor
-Arnož Šiljan, Univerza v Mariboru - FERI
+Arnož Siljan, Univerza v Mariboru - FERI
 
 ## Opis
 Projekt primerja performanco PostgreSQL in MySQL baz podatkov pri:
