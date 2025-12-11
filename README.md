@@ -1,3 +1,4 @@
+[🇬🇧 English version](README_EN.md)
 # Primerjava baz podatkov: PostgreSQL vs MySQL vs MariaDB
 
 Projekt za predmet Sistemska podpora - primerjava performanc PostgreSQL, MySQL in MariaDB baz podatkov na Linux (Fedora) in FreeBSD sistemih.
