@@ -198,12 +198,15 @@ python3 benchmark_mariadb.py
 ```
 .
 ├── README.md
-├── setup_test_data.py        # PostgreSQL vs MySQL setup
-├── benchmark.py               # PostgreSQL vs MySQL benchmark
-├── optimize.py                # PostgreSQL vs MySQL optimizacija
-├── setup_mariadb_test.py     # PostgreSQL vs MariaDB setup
-├── benchmark_mariadb.py       # PostgreSQL vs MariaDB benchmark
-└── optimize_mariadb_py       # PostgreSQL vs MariaDB optimizacija
+├── setup_test_data.py           # PostgreSQL vs MySQL setup
+├── benchmark.py                  # PostgreSQL vs MySQL benchmark
+├── optimize.py                   # PostgreSQL vs MySQL optimizacija
+├── setup_mariadb_test.py        # PostgreSQL vs MariaDB setup
+├── benchmark_mariadb.py          # PostgreSQL vs MariaDB benchmark
+├── optimize_mariadb.py           # PostgreSQL vs MariaDB optimizacija
+├── compare_fedora_freebsd.py    # Fedora vs FreeBSD primerjava (setup + benchmark)
+├── optimize_freebsd.py           # Fedora vs FreeBSD optimizacija
+└── benchmark_only_freebsd.py    # Fedora vs FreeBSD benchmark (samo SELECT)
 ```
 
 ## Fedora vs FreeBSD primerjava
