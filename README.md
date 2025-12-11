@@ -206,8 +206,89 @@ python3 benchmark_mariadb.py
 └── optimize_mariadb_py       # PostgreSQL vs MariaDB optimizacija
 ```
 
-## FreeBSD testi
-*Coming soon...*
+## Fedora vs FreeBSD primerjava
+
+Primerjava PostgreSQL performanc med Fedora Linux in FreeBSD operacijskim sistemom.
+
+### Namestitev (FreeBSD)
+```bash
+# PostgreSQL
+pkg install postgresql16-server postgresql16-client
+sysrc postgresql_enable="YES"
+service postgresql initdb
+service postgresql start
+
+# Konfiguracija za oddaljeni dostop
+# Uredi /var/db/postgres/data16/postgresql.conf
+listen_addresses = '*'
+
+# Uredi /var/db/postgres/data16/pg_hba.conf
+host    all     all     192.168.0.0/24    md5
+
+service postgresql restart
+```
+
+### Uporaba (iz Fedore)
+```bash
+# Setup in primerjava
+python3 compare_fedora_freebsd.py
+
+# Optimizacija
+python3 optimize_freebsd.py
+
+# Benchmark po optimizaciji
+python3 benchmark_only_freebsd.py
+```
+
+### Rezultati Fedora vs FreeBSD
+
+#### INSERT operacije (100,000 zapisov)
+| Platforma | Čas | Records/s |
+|-----------|-----|-----------|
+| Fedora (lokalno) | 10.30s | 9,705 |
+| FreeBSD (preko mreže) | 160.61s | 623 |
+
+**Ugotovitev:** Fedora 93.6% hitrejši - mrežna latenca močno vpliva na INSERT performance.
+
+#### SELECT operacije (brez indeksov)
+| Poizvedba | Fedora | FreeBSD | Hitrejši |
+|-----------|---------|---------|----------|
+| Simple SELECT | 2.55ms | 5.84ms | Fedora (56%) |
+| COUNT | 8.67ms | 9.12ms | Fedora (5%) |
+| AVG agregacija | 20.39ms | 23.29ms | Fedora (12%) |
+| LIKE iskanje | 10.78ms | 18.55ms | Fedora (42%) |
+| Range | 31.66ms | 65.01ms | Fedora (51%) |
+| ORDER BY | 19.43ms | 17.27ms | **FreeBSD (11%)** |
+
+#### SELECT operacije (z indeksi)
+| Poizvedba | Fedora | FreeBSD | Izboljšava Fedora | Izboljšava FreeBSD |
+|-----------|---------|---------|-------------------|---------------------|
+| Simple SELECT | 0.75ms | 3.38ms | 3.4x hitrejši | 1.7x hitrejši |
+| ORDER BY | 0.45ms | 3.50ms | **43x hitrejši** | **5x hitrejši** |
+| Range | 16.68ms | 79.74ms | 1.9x hitrejši | - |
+
+#### Ustvarjanje indeksov
+| Platforma | Čas za 3 indekse |
+|-----------|------------------|
+| Fedora | 0.33s |
+| FreeBSD | 0.55s |
+
+### Zaključki primerjave OS
+
+**Linux (Fedora) prednosti:**
+- Hitrejši pri lokalnih operacijah
+- Boljša podpora za networking/remote access
+- Večja izboljšava z indeksi (43x vs 5x pri ORDER BY)
+
+**FreeBSD prednosti:**
+- Zmeren pri ORDER BY poizvedbah (brez indeksov)
+- Stabilen performance
+- Boljša izolacija sistema
+
+**Mrežna latenca:**
+- INSERT operacije so **16x počasnejše** preko mreže
+- SELECT operacije so **2-5x počasnejše** preko mreže
+- Za produkcijsko okolje je lokalni dostop kritičen
 
 ## Licence
 MIT
